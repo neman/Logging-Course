@@ -282,7 +282,7 @@ public IEnumerable<string> Get()
 4. Add `loggerFactory.AddFile("Logs/Nemke-{Date}.txt");` to Startup Configure method
 5. Change code to
 ```csharp
-loggerFactory.AddFile("Logs/AppLog-{Date}.txt", isJson:false, minimumLevel:LogLevel.Trace);
+loggerFactory.AddFile("Logs/log-{Date}.txt", isJson:false, minimumLevel:LogLevel.Trace);
 
 var logger = loggerFactory.CreateLogger<Startup>();
 logger.LogTrace(new EventId(), new Exception("Demo"), "Trace message");
@@ -292,4 +292,15 @@ logger.LogWarning("Warning message");
 logger.LogError("Error message");
 logger.LogCritical(new EventId(), new FormatException(),"Critical message");            
 ```
-6. Show generated txt file
+6. Show Log txt file (with regular and json entries)
+#### NLog Lab
+1. Do the lab by the link examples at 
+    - https://github.com/NLog/NLog.Web/wiki/Getting-started-with-ASP.NET-Core-(project.json)
+    - https://github.com/NLog/NLog.Web/wiki/Getting-started-with-ASP.NET-Core-(csproj---vs2017)
+and try to integrate MEL with NLog.
+#### Serilog
+Before Serilog example, show slides about structure logging. 
+1. Show github serilog sink links https://github.com/serilog/serilog/wiki/Provided-Sinks
+2. Create new .NET Core WebApi SerilogExample Project
+3. Add package reference to `Serilog.Extensions.Logging`, `Serilog`, `Serilog.Sinks.Literate`, `Serilog.Sinks.Seq` 
+4. 

@@ -5,6 +5,14 @@ VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RollingFile", "RollingFile\RollingFile.csproj", "{B01C32A9-51DE-4AAD-B7B6-CF6141F5E9EC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.", "1.", "{F02ABE01-57D9-4941-AF88-6E963410BAF2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. (NLog Lab)", "2. (NLog Lab)", "{37AF4192-8937-4AB2-A846-D983EA2FFFFE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Serilog", "3. Serilog", "{F7382F01-E0C2-4649-B07D-C68B3ED0820E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerilogExample", "Serilog\SerilogExample.csproj", "{895D00C1-DC69-462C-8509-2187C68D34FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,8 +23,16 @@ Global
 		{B01C32A9-51DE-4AAD-B7B6-CF6141F5E9EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B01C32A9-51DE-4AAD-B7B6-CF6141F5E9EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B01C32A9-51DE-4AAD-B7B6-CF6141F5E9EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{895D00C1-DC69-462C-8509-2187C68D34FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{895D00C1-DC69-462C-8509-2187C68D34FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{895D00C1-DC69-462C-8509-2187C68D34FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{895D00C1-DC69-462C-8509-2187C68D34FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B01C32A9-51DE-4AAD-B7B6-CF6141F5E9EC} = {F02ABE01-57D9-4941-AF88-6E963410BAF2}
+		{895D00C1-DC69-462C-8509-2187C68D34FD} = {F7382F01-E0C2-4649-B07D-C68B3ED0820E}
 	EndGlobalSection
 EndGlobal
