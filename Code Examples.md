@@ -75,7 +75,61 @@ namespace ApplicationLogging
     }
 }
 ```
+#### ScopeConsole
+1. Create new .NET Core Console App ScopeConsole
+2. Add new file `Service.cs` with the following code
+```csharp
+using Microsoft.Extensions.Logging;
 
+namespace Scope
+{
+    class Service
+    {
+        private readonly ILogger<Service> _logger;
+
+        public Service(ILogger<Service> logger)
+        {
+            _logger = logger;
+        }
+
+        public void DoStuff()
+        {
+            // Some logic before calling DB
+
+            using (_logger.BeginScope($"{nameof(DoStuff)} has started DB execution"))
+            {
+                _logger.LogInformation("Init some data");
+                //...
+                _logger.LogInformation("Getting data from DB");
+                //...
+                _logger.LogInformation("Data from DB {}", 42);
+            }
+        }
+    }
+}
+```
+3. Change Main method in `Program.cs`. 
+> Note: includeScopes must be true
+```csharp
+static void Main(string[] args)
+{
+    var loggerFactory = new LoggerFactory().AddConsole(includeScopes: true);               
+    
+    ILogger logger = loggerFactory.CreateLogger<Program>();
+
+    using (logger.BeginScope("Code block calling Service"))
+    {
+                
+    logger.LogInformation("Getting item {ID}", 5);
+
+    var service = new Service(loggerFactory.CreateLogger<Service>());
+
+    service.DoStuff();
+
+    logger.LogWarning("End of block calling Service");                
+    }
+}
+```
 ## 02 Example
 #### LoggerFactoryInjection
 1. Create ASP.NET Core Web Api project
@@ -187,6 +241,7 @@ public class Program
 ```
 4. Remove `loggerFactory.AddConsole(Configuration.GetSection("Logging"));` from Configure method in Startup class
 5. Show the working demo
+6. Bonus: Latest interesting issue example on github https://github.com/aspnet/Announcements/issues/241
 #### LoggingInController
 1. Create new new ASP.NET Core Web Api project LoggingInController
 2. Add `using Microsoft.Extensions.DependencyInjection;` in `ValuesController`
@@ -219,3 +274,22 @@ public IEnumerable<string> Get()
 }
 ```
 ![LoggingInController](https://raw.githubusercontent.com/neman/Logging-Course/master/Images/LoggingInController.png)
+## 03 Example
+#### Rolling File in one line
+1. Create new empty sln RollingFile
+2. Create new .NET Core WebApi RollingFile
+3. Add package reference to `Serilog.Extensions.Logging.File`
+4. Add `loggerFactory.AddFile("Logs/Nemke-{Date}.txt");` to Startup Configure method
+5. Change code to
+```csharp
+loggerFactory.AddFile("Logs/AppLog-{Date}.txt", isJson:false, minimumLevel:LogLevel.Trace);
+
+var logger = loggerFactory.CreateLogger<Startup>();
+logger.LogTrace(new EventId(), new Exception("Demo"), "Trace message");
+logger.LogDebug("Debug message");
+logger.LogInformation("Information message");
+logger.LogWarning("Warning message");
+logger.LogError("Error message");
+logger.LogCritical(new EventId(), new FormatException(),"Critical message");            
+```
+6. Show generated txt file
