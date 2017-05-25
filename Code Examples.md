@@ -1,5 +1,5 @@
-#### 01 Example
-First example
+## 01 Example
+#### LoggingConsoleDefault
 1. Create new .NET Core Console App
 2. Add following code
 ```csharp
@@ -17,22 +17,23 @@ ILogger logger = loggerFactory.CreateLogger<Program>();
 
             logger.LogCritical("The world collapsed");
 ```
-5. Add new .NET Core Console App SpecificConsoleLoggerProvider
-6. Copy Program.cs class from previous example
-7. Add the following code instead the one from step 2.
+#### SpecificConsoleLoggerProvider
+1. Add new .NET Core Console App SpecificConsoleLoggerProvider
+2. Copy Program.cs class from previous example
+3. Add the following code instead the one from step 2.
 ```csharp
 loggerFactory.AddProvider(
   new ConsoleLoggerProvider(
     (text, logLevel) => logLevel >= LogLevel.Verbose , true));
 ```
-8. Show on github how LogLevel.Verbose has changed to LogLevel.Trace
+4. Show on github how LogLevel.Verbose has changed to LogLevel.Trace
 https://github.com/aspnet/Logging/blob/9506ccc3f3491488fe88010ef8b9eb64594abf95/src/Microsoft.Extensions.Logging.Abstractions/LogLevel.cs
 https://github.com/aspnet/Logging/commit/7a05d121d6c120a15d5a2178e3e45d7c400d22c0
-9. Change to LogLevel.Trace and add the following code
+5. Change to LogLevel.Trace and add the following code
 ```csharp
 logger.LogTrace("Tracing...");
 ```
-10. Change code from
+6. Change code from
 ```csharp
 loggerFactory.AddProvider(
                 new ConsoleLoggerProvider((text, logLevel) => logLevel >= LogLevel.Trace, true));
@@ -40,7 +41,8 @@ loggerFactory.AddProvider(
                 new ConsoleLoggerProvider((text, logLevel) => logLevel >= LogLevel.Error, true));
 ```
 
-#### 02 Example
+## 02 Example
+#### LoggerFactoryInjection
 1. Create ASP.NET Core Web Api project
 2. Set to run as ConsoleApp (Do not use IIS Express)
 3. Set breakpoint at Startup Configure method and show that LoggerFactory is instantiated.
@@ -97,8 +99,9 @@ public static class LoggingServiceCollectionExtensions
         }
     }
 ```
-7. Add new ASP.NET Core Web Api project LoggerFactoryInStartupCtor
-8. Add private field _logger and change Startp ctor
+#### LoggerFactoryInStartupCtor
+1. Add new ASP.NET Core Web Api project LoggerFactoryInStartupCtor
+2. Add private field _logger and change Startp ctor
 ```csharp
  private readonly ILogger _logger;
 
@@ -116,8 +119,65 @@ public static class LoggingServiceCollectionExtensions
             Configuration = builder.Build();
         }
 ```
-9. Show that there are now double entries of log (Because of the same provider added 2 times)
+3. Show that there are now double entries of log (Because of the same provider added 2 times)
 ![Double Log Entry](https://raw.githubusercontent.com/neman/Logging-Course/master/Images/DoubleLogEntry.png)
-10. Add new ASP.NET Core Web Api project LoggerFactoryInProgramMain
+#### LoggerFactoryInProgramMain
+1. Add new ASP.NET Core Web Api project LoggerFactoryInProgramMain
+2. Show IWebHostBuilder method `public IWebHostBuilder UseLoggerFactory(ILoggerFactory loggerFactory);`
+3. Add the following code to Program.cs
+```csharp
+public class Program
+{
+    private static ILogger _logger;
 
-6. Show IWebHostBuilder method `public IWebHostBuilder UseLoggerFactory(ILoggerFactory loggerFactory);`
+    public static void Main(string[] args)
+    {
+        var loggerFactory = new LoggerFactory().AddConsole();
+        _logger = loggerFactory.CreateLogger<Program>();
+        _logger.LogInformation($"Hello from {nameof(Main)} before building host");
+        
+        var host = new WebHostBuilder()
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseIISIntegration()
+                .UseStartup<Startup>()
+                .UseApplicationInsights()
+                .UseLoggerFactory(loggerFactory)
+                .Build();
+
+        host.Run();
+    }
+}
+```
+4. Remove `loggerFactory.AddConsole(Configuration.GetSection("Logging"));` from Configure method in Startup class
+5. Show the working demo
+#### LoggingInController
+1. Create new new ASP.NET Core Web Api project LoggingInController
+2. Add `using Microsoft.Extensions.DependencyInjection;` in `ValuesController`
+3. Add following fields
+```csharp
+private readonly ILogger _loggerFromFactory;
+private readonly ILogger _logger;   
+```
+4. Change constructor to
+```csharp
+public ValuesController(ILoggerFactory loggerFactory, ILogger<ValuesController> logger)
+{
+    _loggerFromFactory = loggerFactory.CreateLogger<ValuesController>();
+    _logger = logger;                        
+}
+```
+5. Change Get Action to
+```csharp
+[HttpGet]
+public IEnumerable<string> Get()
+{
+    var _loggerFromServices = this.HttpContext.RequestServices.GetService<ILoggerFactory>().CreateLogger("Values");
+    
+    _loggerFromFactory.LogWarning(new EventId(42), "Logger from factory");
+    _logger.LogWarning(new EventId(43), "Logger from DI");            
+    _loggerFromServices.LogWarning(new EventId(44), "Logger from services");
+
+    return new string[] { "value1", "value2" };
+}
+```

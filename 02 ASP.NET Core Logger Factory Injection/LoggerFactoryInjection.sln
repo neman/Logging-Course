@@ -9,6 +9,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerFactoryInStartupCtor"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerFactoryInProgramMain", "LoggerFactoryInProgramMain\LoggerFactoryInProgramMain.csproj", "{49D59A51-0282-4ED8-9956-43E8D2B18257}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.", "1.", "{7C88523E-7A1D-4D20-9986-DC1F985B7ABD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.", "2.", "{22C66C45-1A72-4C2B-A4A2-A0BB03E96045}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.", "3.", "{BCEC13F8-53DA-471F-B24A-A684042D479C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.", "4.", "{408A15A6-0800-4D81-A2EB-2559AA8B0DE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggingInController", "LoggingInController\LoggingInController.csproj", "{FF995F9C-52E7-4ED9-A675-AD37235EB229}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,8 +37,18 @@ Global
 		{49D59A51-0282-4ED8-9956-43E8D2B18257}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49D59A51-0282-4ED8-9956-43E8D2B18257}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49D59A51-0282-4ED8-9956-43E8D2B18257}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF995F9C-52E7-4ED9-A675-AD37235EB229}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF995F9C-52E7-4ED9-A675-AD37235EB229}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF995F9C-52E7-4ED9-A675-AD37235EB229}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF995F9C-52E7-4ED9-A675-AD37235EB229}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AB99B49A-D4A5-4DE7-AD23-39EAD32E5A33} = {7C88523E-7A1D-4D20-9986-DC1F985B7ABD}
+		{F07C62D6-A589-4210-B50A-721E7C620C7A} = {22C66C45-1A72-4C2B-A4A2-A0BB03E96045}
+		{49D59A51-0282-4ED8-9956-43E8D2B18257} = {BCEC13F8-53DA-471F-B24A-A684042D479C}
+		{FF995F9C-52E7-4ED9-A675-AD37235EB229} = {408A15A6-0800-4D81-A2EB-2559AA8B0DE0}
 	EndGlobalSection
 EndGlobal
