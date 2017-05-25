@@ -47,10 +47,58 @@ loggerFactory.AddProvider(
 ```csharp
 loggerFactory.AddConsole(Configuration.GetSection("Logging"));
 ```
-4. 
+4. Where is the magic? What calls Configure() and where the ILoggerFactory instance actually came from and live at.
+Go to Program.cs -> Main() -> Build() -> F12 (Microsoft.AspNetCore.Hosting.Abstractions)
+5. Go to Github links
+    https://github.com/aspnet/Hosting/blob/7ac6842d1864fd97c417abd016440893c3384b12/src/Microsoft.AspNetCore.Hosting/WebHostBuilder.cs#L213
+    https://github.com/aspnet/Hosting/blob/7ac6842d1864fd97c417abd016440893c3384b12/src/Microsoft.AspNetCore.Hosting/WebHostBuilder.cs#L237
+    https://github.com/aspnet/Hosting/blob/7ac6842d1864fd97c417abd016440893c3384b12/src/Microsoft.AspNetCore.Hosting/WebHostBuilder.cs#L255
+    https://github.com/aspnet/Hosting/blob/7ac6842d1864fd97c417abd016440893c3384b12/src/Microsoft.AspNetCore.Hosting/WebHostBuilder.cs#L316    
+```csharp
+ public IWebHost Build()
+ ...
+ var hostingServices = BuildCommonServices(out var hostingStartupErrors);
+ ...
+ private IServiceCollection BuildCommonServices(out AggregateException hostingStartupErrors)
+ ...
+  // The configured ILoggerFactory is added as a singleton here. AddLogging below will not add an additional one.
+            var loggerFactory = _createLoggerFactoryDelegate?.Invoke(_context) ?? new LoggerFactory();
+            services.AddSingleton(loggerFactory);
+            _context.LoggerFactory = loggerFactory;
 
-Add new ASP.NET Core Web Api project LoggerFactoryInStartupCtor
-Add private field _logger and change Startp ctor
+            foreach (var configureLogging in _configureLoggingDelegates)
+            {
+                configureLogging(_context, loggerFactory);
+            }
+
+            //This is required to add ILogger of T.
+            services.AddLogging();
+```
+6. AddLogging source code from https://github.com/aspnet/Logging/blob/dev/src/Microsoft.Extensions.Logging/LoggingServiceCollectionExtensions.cs#L20
+```csharp
+public static class LoggingServiceCollectionExtensions
+    {
+        /// <summary>
+        /// Adds logging services to the specified <see cref="IServiceCollection" />.
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
+        /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+        public static IServiceCollection AddLogging(this IServiceCollection services)
+        {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
+            services.TryAdd(ServiceDescriptor.Singleton<ILoggerFactory, LoggerFactory>());
+            services.TryAdd(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(Logger<>)));
+
+            return services;
+        }
+    }
+```
+7. Add new ASP.NET Core Web Api project LoggerFactoryInStartupCtor
+8. Add private field _logger and change Startp ctor
 ```csharp
  private readonly ILogger _logger;
 
@@ -68,6 +116,8 @@ Add private field _logger and change Startp ctor
             Configuration = builder.Build();
         }
 ```
-Show that there are now double entries of log (Because of the same provider added 2 times)
+9. Show that there are now double entries of log (Because of the same provider added 2 times)
 ![Double Log Entry](https://raw.githubusercontent.com/neman/Logging-Course/master/Images/DoubleLogEntry.png)
+10. Add new ASP.NET Core Web Api project LoggerFactoryInProgramMain
 
+6. Show IWebHostBuilder method `public IWebHostBuilder UseLoggerFactory(ILoggerFactory loggerFactory);`
