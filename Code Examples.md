@@ -112,7 +112,7 @@ foreach (var configureLogging in _configureLoggingDelegates)
 //This is required to add ILogger of T.
 services.AddLogging();
 ```
-6. AddLogging source code from https://github.com/aspnet/Logging/blob/dev/src/Microsoft.Extensions.Logging/LoggingServiceCollectionExtensions.cs#L20
+6. Show AddLogging extension source code from https://github.com/aspnet/Logging/blob/dev/src/Microsoft.Extensions.Logging/LoggingServiceCollectionExtensions.cs#L20
 ```csharp
 public static class LoggingServiceCollectionExtensions
 {
