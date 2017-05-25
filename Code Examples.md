@@ -39,3 +39,32 @@ loggerFactory.AddProvider(
 loggerFactory.AddProvider(
                 new ConsoleLoggerProvider((text, logLevel) => logLevel >= LogLevel.Error, true));
 ```
+
+#### 02 Example
+1. Create ASP.NET Core Web Api project
+2. Set to run as ConsoleApp (Do not use IIS Express)
+3. Set breakpoint at Startup Configure method and show that LoggerFactory is instantiated.
+```csharp
+loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+```
+4. 
+
+Add new ASP.NET Core Web Api project LoggerFactoryInStartupCtor
+Add private field _logger and change Startp ctor
+```csharp
+ private readonly ILogger _logger;
+
+        public Startup(IHostingEnvironment env, ILoggerFactory loggerFactory)
+        {
+            loggerFactory.AddConsole();
+            _logger = loggerFactory.CreateLogger<Startup>();
+            _logger.LogInformation($"Welcome from {nameof(Startup)}");
+
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
+        }
+```
