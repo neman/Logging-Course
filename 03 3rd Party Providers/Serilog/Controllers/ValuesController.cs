@@ -44,7 +44,8 @@ namespace SerilogExample.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            throw new Exception();
+            
         }
 
         // POST api/values

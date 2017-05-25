@@ -303,4 +303,13 @@ Before Serilog example, show slides about structure logging.
 1. Show github serilog sink links https://github.com/serilog/serilog/wiki/Provided-Sinks
 2. Create new .NET Core WebApi SerilogExample Project
 3. Add package reference to `Serilog.Extensions.Logging`, `Serilog`, `Serilog.Sinks.Literate`, `Serilog.Sinks.Seq` 
-4. 
+4. Add following code in Startup ctor
+```csharp
+ Log.Logger = new LoggerConfiguration()
+            .Enrich.FromLogContext()
+            .WriteTo.LiterateConsole()
+            .WriteTo.Seq("http://localhost:5341")
+            .CreateLogger();
+```
+5. Add following code in Configure method `loggerFactory.AddSerilog();`
+6. Change ValuesController 
