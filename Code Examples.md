@@ -68,3 +68,6 @@ Add private field _logger and change Startp ctor
             Configuration = builder.Build();
         }
 ```
+Show that there are now double entries of log (Because of the same provider added 2 times)
+![Double Log Entry](https://raw.githubusercontent.com/neman/Logging-Course/master/Images/DoubleLogEntry.png)
+
