@@ -14,10 +14,9 @@ namespace LoggingConsoleDefault
                 .AddDebug();
 
             ILogger logger = loggerFactory.CreateLogger<Program>();
+
             logger.LogInformation("Are you OK Computer");
-
             logger.LogError("System failed");
-
             logger.LogCritical("The world collapsed");
         }
     }

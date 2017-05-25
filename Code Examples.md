@@ -37,6 +37,44 @@ loggerFactory.AddProvider(
 loggerFactory.AddProvider(
                 new ConsoleLoggerProvider((text, logLevel) => logLevel >= LogLevel.Error, true));
 ```
+#### ApplicationLogging
+1. Create new .NET Core Console App ApplicationLogging
+2. Add file `LoggingHelper.cs` with following content
+```csharp
+using Microsoft.Extensions.Logging;
+
+namespace ApplicationLogging
+{
+    public static class LoggingHelper
+    {
+        public static ILoggerFactory LoggerFactory { get; } = new LoggerFactory();
+        public static ILogger CreateLogger<T>() => LoggerFactory.CreateLogger<T>();
+        public static ILogger CreateLogger(string categoryName) => LoggerFactory.CreateLogger(categoryName);
+    }
+}
+```
+3. `Program.cs` file should look like 
+```csharp
+using Microsoft.Extensions.Logging;
+using System;
+
+namespace ApplicationLogging
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            LoggingHelper.LoggerFactory.AddConsole();
+
+            LoggingHelper.CreateLogger<Program>().LogInformation("Before Hello World");
+
+            Console.WriteLine($"{Environment.NewLine} Hello World! {Environment.NewLine}");
+
+            LoggingHelper.CreateLogger("Program").LogInformation(new EventId(66), "After Hello World");
+        }
+    }
+}
+```
 
 ## 02 Example
 #### LoggerFactoryInjection
@@ -170,7 +208,8 @@ public ValuesController(ILoggerFactory loggerFactory, ILogger<ValuesController> 
 [HttpGet]
 public IEnumerable<string> Get()
 {
-    var _loggerFromServices = this.HttpContext.RequestServices.GetService<ILoggerFactory>().CreateLogger("Values");
+    var _loggerFromServices = this.HttpContext.RequestServices.GetService<ILoggerFactory>()
+                                                              .CreateLogger("Values");
     
     _loggerFromFactory.LogWarning(new EventId(42), "Logger from factory");
     _logger.LogWarning(new EventId(43), "Logger from DI");            
@@ -179,3 +218,4 @@ public IEnumerable<string> Get()
     return new string[] { "value1", "value2" };
 }
 ```
+![LoggingInController](https://raw.githubusercontent.com/neman/Logging-Course/master/Images/LoggingInController.png)
