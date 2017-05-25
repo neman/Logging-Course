@@ -4,27 +4,24 @@
 2. Add following code
 ```csharp
 var loggerFactory = new LoggerFactory()
-                .AddConsole()
-                .AddDebug();
+                        .AddConsole()
+                        .AddDebug();
 ```
 3. Add packages Microsoft.Extensions.Logging, Microsoft.Extensions.Logging.Console, Microsoft.Extensions.Logging.Debug
 4. Add code following code
 ```csharp
 ILogger logger = loggerFactory.CreateLogger<Program>();
-            logger.LogInformation("Are you OK Computer");
-
-            logger.LogError("System failed");
-
-            logger.LogCritical("The world collapsed");
+            
+logger.LogInformation("Are you OK Computer");
+logger.LogError("System failed");
+logger.LogCritical("The world collapsed");
 ```
 #### SpecificConsoleLoggerProvider
 1. Add new .NET Core Console App SpecificConsoleLoggerProvider
 2. Copy Program.cs class from previous example
-3. Add the following code instead the one from step 2.
+3. Add the following code instead the one from `LoggingConsoleDefault step 2`.
 ```csharp
-loggerFactory.AddProvider(
-  new ConsoleLoggerProvider(
-    (text, logLevel) => logLevel >= LogLevel.Verbose , true));
+loggerFactory.AddProvider(new ConsoleLoggerProvider((text, logLevel) => logLevel >= LogLevel.Verbose , true));
 ```
 4. Show on github how LogLevel.Verbose has changed to LogLevel.Trace
 https://github.com/aspnet/Logging/blob/9506ccc3f3491488fe88010ef8b9eb64594abf95/src/Microsoft.Extensions.Logging.Abstractions/LogLevel.cs
@@ -64,22 +61,23 @@ Go to Program.cs -> Main() -> Build() -> F12 (Microsoft.AspNetCore.Hosting.Abstr
  private IServiceCollection BuildCommonServices(out AggregateException hostingStartupErrors)
  ...
   // The configured ILoggerFactory is added as a singleton here. AddLogging below will not add an additional one.
-            var loggerFactory = _createLoggerFactoryDelegate?.Invoke(_context) ?? new LoggerFactory();
-            services.AddSingleton(loggerFactory);
-            _context.LoggerFactory = loggerFactory;
+var loggerFactory = _createLoggerFactoryDelegate?.Invoke(_context) ?? new LoggerFactory();
 
-            foreach (var configureLogging in _configureLoggingDelegates)
-            {
-                configureLogging(_context, loggerFactory);
-            }
+services.AddSingleton(loggerFactory);
+_context.LoggerFactory = loggerFactory;
 
-            //This is required to add ILogger of T.
-            services.AddLogging();
+foreach (var configureLogging in _configureLoggingDelegates)
+{
+    configureLogging(_context, loggerFactory);
+}
+
+//This is required to add ILogger of T.
+services.AddLogging();
 ```
 6. AddLogging source code from https://github.com/aspnet/Logging/blob/dev/src/Microsoft.Extensions.Logging/LoggingServiceCollectionExtensions.cs#L20
 ```csharp
 public static class LoggingServiceCollectionExtensions
-    {
+{
         /// <summary>
         /// Adds logging services to the specified <see cref="IServiceCollection" />.
         /// </summary>
@@ -97,27 +95,27 @@ public static class LoggingServiceCollectionExtensions
 
             return services;
         }
-    }
+}
 ```
 #### LoggerFactoryInStartupCtor
 1. Add new ASP.NET Core Web Api project LoggerFactoryInStartupCtor
 2. Add private field _logger and change Startp ctor
 ```csharp
- private readonly ILogger _logger;
+private readonly ILogger _logger;
 
-        public Startup(IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {
-            loggerFactory.AddConsole();
-            _logger = loggerFactory.CreateLogger<Startup>();
-            _logger.LogInformation($"Welcome from {nameof(Startup)}");
+public Startup(IHostingEnvironment env, ILoggerFactory loggerFactory)
+{
+    loggerFactory.AddConsole();
+    _logger = loggerFactory.CreateLogger<Startup>();
+    _logger.LogInformation($"Welcome from {nameof(Startup)}");
 
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
-        }
+    var builder = new ConfigurationBuilder()
+        .SetBasePath(env.ContentRootPath)
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+        .AddEnvironmentVariables();
+        Configuration = builder.Build();
+}
 ```
 3. Show that there are now double entries of log (Because of the same provider added 2 times)
 ![Double Log Entry](https://raw.githubusercontent.com/neman/Logging-Course/master/Images/DoubleLogEntry.png)
