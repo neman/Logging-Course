@@ -78,6 +78,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ForExceptionSample\ForExceptionSample.csproj">
+      <Project>{6e30a4e1-7462-4902-884e-172bf679d08a}</Project>
+      <Name>ForExceptionSample</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Enjoying.Logging.Desktop\Enjoying.Logging.Desktop.csproj">
       <Project>{cf0e5724-7fb0-4ca7-933d-11403d98cfb2}</Project>
       <Name>Enjoying.Logging.Desktop</Name>

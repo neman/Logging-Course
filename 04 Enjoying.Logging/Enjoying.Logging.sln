@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D104D8AF-7779-44A6-869E-6A27A3AAB5EE}"
 EndProject
@@ -31,6 +31,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enjoying.Logging.MvcApp", "samples\Enjoying.Logging.MvcApp\Enjoying.Logging.MvcApp.csproj", "{A1B9B301-175C-4271-BCFF-3AB015DE1A61}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enjoying.Logging.WindowsApp", "samples\Enjoying.Logging.WindowsApp\Enjoying.Logging.WindowsApp.csproj", "{6A8E218D-2714-41D5-8D97-9AFBBB3D2A50}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "exception", "exception", "{27B8CAE1-F5D4-4EF6-88D1-7A646F9FDEA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForExceptionSample", "ForExceptionSample\ForExceptionSample.csproj", "{6E30A4E1-7462-4902-884E-172BF679D08A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -150,6 +154,18 @@ Global
 		{6A8E218D-2714-41D5-8D97-9AFBBB3D2A50}.netcoreapp1.1|Any CPU.Build.0 = Release|Any CPU
 		{6A8E218D-2714-41D5-8D97-9AFBBB3D2A50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A8E218D-2714-41D5-8D97-9AFBBB3D2A50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E30A4E1-7462-4902-884E-172BF679D08A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E30A4E1-7462-4902-884E-172BF679D08A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E30A4E1-7462-4902-884E-172BF679D08A}.net45|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E30A4E1-7462-4902-884E-172BF679D08A}.net45|Any CPU.Build.0 = Debug|Any CPU
+		{6E30A4E1-7462-4902-884E-172BF679D08A}.net451|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E30A4E1-7462-4902-884E-172BF679D08A}.net451|Any CPU.Build.0 = Debug|Any CPU
+		{6E30A4E1-7462-4902-884E-172BF679D08A}.net46|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E30A4E1-7462-4902-884E-172BF679D08A}.net46|Any CPU.Build.0 = Debug|Any CPU
+		{6E30A4E1-7462-4902-884E-172BF679D08A}.netcoreapp1.1|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E30A4E1-7462-4902-884E-172BF679D08A}.netcoreapp1.1|Any CPU.Build.0 = Debug|Any CPU
+		{6E30A4E1-7462-4902-884E-172BF679D08A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E30A4E1-7462-4902-884E-172BF679D08A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -164,5 +180,6 @@ Global
 		{D089551C-C012-40EE-A1C4-34651B87634A} = {68013504-D4B3-4FCC-A3B2-D333A63A0716}
 		{A1B9B301-175C-4271-BCFF-3AB015DE1A61} = {68013504-D4B3-4FCC-A3B2-D333A63A0716}
 		{6A8E218D-2714-41D5-8D97-9AFBBB3D2A50} = {68013504-D4B3-4FCC-A3B2-D333A63A0716}
+		{6E30A4E1-7462-4902-884E-172BF679D08A} = {27B8CAE1-F5D4-4EF6-88D1-7A646F9FDEA0}
 	EndGlobalSection
 EndGlobal

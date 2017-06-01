@@ -31,7 +31,7 @@ namespace ChangeLevel
             services.AddMvc();
 
             services.AddTransient<MyService>();
-            //services.AddSingleton(cfg => Configuration);
+            services.AddSingleton(cfg => Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
