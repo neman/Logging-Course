@@ -7,15 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggingConsoleDefault", "Lo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecificConsoleLoggerProvider", "SpecificConsoleLoggerProvider\SpecificConsoleLoggerProvider.csproj", "{BF1303BD-85B0-4E67-987E-77345465C3C1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.", "1.", "{5F6733D2-DF08-406E-A469-D4CC8824693B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Logging Console Default", "1. Logging Console Default", "{5F6733D2-DF08-406E-A469-D4CC8824693B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.", "2.", "{62A5BDD7-CB2E-449A-8673-088849D1EB42}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Specific Console Log Provider", "2. Specific Console Log Provider", "{62A5BDD7-CB2E-449A-8673-088849D1EB42}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.", "3.", "{EAD6585C-B1EC-4703-9ACD-47AB0093AF3B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Application Logging", "3. Application Logging", "{EAD6585C-B1EC-4703-9ACD-47AB0093AF3B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationLogging", "ApplicationLogging\ApplicationLogging.csproj", "{7928737E-17FD-4E7D-B739-0749E2A97E0C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.", "4.", "{C54E94FC-6EFF-46F7-9CC2-FAD182C7F3D3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Scope", "4. Scope", "{C54E94FC-6EFF-46F7-9CC2-FAD182C7F3D3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScopeConsole", "ScopeConsole\ScopeConsole.csproj", "{C10CAE02-B476-4F73-AE06-E8A98BBC7AD3}"
 EndProject

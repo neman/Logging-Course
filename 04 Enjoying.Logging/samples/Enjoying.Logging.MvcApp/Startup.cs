@@ -1,25 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace RollingFile
+namespace Enjoying.Logging.Mvc
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        private readonly ILogger _logger;
+        public Startup(IHostingEnvironment env, ILogger<Startup> logger)
         {
+            _logger = logger;
+            _logger.LogInformation($"{nameof(Startup)} ctor begins");
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            
+
+            _logger.LogInformation($"{nameof(Startup)} ctor ends");
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -28,25 +32,18 @@ namespace RollingFile
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-
-            loggerFactory.AddFile("Logs/log-{Date}.txt", isJson:false, minimumLevel:LogLevel.Trace);
-
+            //app.UseEnjoyingLogging();
             app.UseMvc();
+            
 
-            var logger = loggerFactory.CreateLogger<Startup>();
-            logger.LogTrace(new EventId(), new Exception("Demo"), "Trace message");
-            logger.LogDebug("Debug message");
-            logger.LogInformation("Information message");
-            logger.LogWarning("Warning message");
-            logger.LogError("Error message");
-            logger.LogCritical(new EventId(), new FormatException(),"Critical message");            
+            var logger = ApplicationLogging.CreateLogger<Startup>();
+            logger.LogInformation("Message from Configure Method");
         }
     }
 }
