@@ -20,7 +20,7 @@ namespace Enjoying.Logging.ConsoleApp
             //Setup Configuration
             var configuration = Configure();
 
-            var useDI = false;
+            var useDI = true;
             if (useDI) { _gui = GetGui(configuration); }
             else
             {

@@ -57,7 +57,7 @@ namespace Enjoying.Logging.WindowsApp
        
         private void button1_Click_1(object sender, EventArgs e)
         {
-            throw new Exception("Exception with inner exception", new StackOverflowException());
+            throw new Exception("Exception with inner exception", new StackOverflowException("Inner second", new ArgumentNullException("not good")));
         }
 
         private void button2_Click(object sender, EventArgs e)

@@ -51,7 +51,7 @@ namespace Enjoying.Logging.Mvc
         {
             //app.UseEnjoyingLogging();
             app.UseMvc();
-            
+            //app.UseExceptionHandler()
 
             var logger = ApplicationLogging.CreateLogger<Startup>();
             logger.LogInformation("Message from Configure Method");

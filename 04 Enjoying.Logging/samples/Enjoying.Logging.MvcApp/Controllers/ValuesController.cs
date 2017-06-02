@@ -24,6 +24,9 @@ namespace Enjoying.Logging.Mvc.Controllers
 
             var applicationLogger = ApplicationLogging.CreateLogger<ValuesController>();
             applicationLogger.LogInformation($"Log from {nameof(ApplicationLogging)}");
+
+            throw new ArgumentOutOfRangeException("Unhanled");
+
             return new string[] { "value1", "value2" };
         }
 
